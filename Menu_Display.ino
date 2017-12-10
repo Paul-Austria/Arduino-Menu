@@ -1,7 +1,7 @@
 // A simple Menu Program made by KspPaul
 /*This project is a Arduino Menu which can be controlled with three Buttons. 
 The first Menu is for a temperature Sensor. In this case the ds18b20. 
-The Seconds is for a phtocell.
+The Seconds is for a photocell.
 And the third is for a led.
 You can see a small demonstration on Reddit: https://www.reddit.com/r/arduino/comments/7ito0w/i_made_a_simple_menu_to_read_and_display/?ref=share&ref_source=link
 */
