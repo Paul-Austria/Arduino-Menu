@@ -1,7 +1,7 @@
 // A simple Menu Program made by KspPaul
 /*This project is a Arduino Menu which can be controlled with three Buttons. 
 The first Menu is for a temperature Sensor. In this case the ds18b20. 
-The Seconds is for a photocell.
+The Seconds is for a phtocell.
 And the third is for a led.
 You can see a small demonstration on Reddit: https://www.reddit.com/r/arduino/comments/7ito0w/i_made_a_simple_menu_to_read_and_display/?ref=share&ref_source=link
 */
@@ -15,10 +15,10 @@ OneWire oneWire(ONE_WIRE_BUS);
 #include <DallasTemperature.h>
 DallasTemperature sensors(&oneWire);
 
-int counter = 1; 
-const int down = 4; 
-const int ok =2 ;
-const int up = 7;
+int counter = 1;  
+const int down = 4;  // this is the down Button
+const int ok =2 ;    // this is the ok Button
+const int up = 7;   // this is the up Button
 const int light = A0; // this is for the photocell
 const int led = 8; // the Pin for the led
 
@@ -50,8 +50,7 @@ void loop() {
   int upState = digitalRead(up);
   int okState = digitalRead(ok);
 
-  Serial.println(counter);
-  if(downState == HIGH)
+  if(downState == HIGH)//because of this Counter the program knews on which Menu you are at the moment
   {
     
     counter--;
@@ -61,19 +60,19 @@ void loop() {
     counter++;
   }
 
-  if(counter==0)
+  if(counter==0) // when the counter is 0 it automatically changes it to 3
   {
     counter = 3;
   }
-  if(counter==4)
+  if(counter==4)// when the counter is 4 it automatically changes it to 1
   {
     counter =1;
   }
 
-  if(okState == HIGH)
+  if(okState == HIGH) // when you press the ok Button it moves into this part of the code.
   {
  
-    if(counter==1)
+    if(counter==1)        // when the counter is zero it moves into this part.
     {
       
      
@@ -87,25 +86,27 @@ void loop() {
         display.display();
         
         delay(100);
-        downState = digitalRead(down);
+        downState = digitalRead(down); // when the user presses the down Button the program goes ot of this part of the code.
       }
+      display.clearDisplay();
     }
     if(counter==2)
     {
       while(downState==LOW)
       {
-        int bright = analogRead(light); 
+        int brightness = analogRead(light); 
 
         
         display.clearDisplay();
         display.setCursor(0,0);
         display.print("Brightness: ");
-        display.println(bright);
+        display.println(brightness);
         display.display();
 
         downState = digitalRead(down);
         delay(200);
       }
+      display.clearDisplay();
     }
     if(counter==3)
     {
@@ -122,10 +123,14 @@ void loop() {
         delay(100);
         downState = digitalRead(down);
       }
+      display.clearDisplay();
+      digitalWrite(led, LOW);
     }
   }
 
-  if(counter==1)
+  //that are the Menus
+  
+  if(counter==1)     
   {
     display.setCursor(0,0);
     display.print("tempS: You are here");
@@ -134,7 +139,7 @@ void loop() {
     display.setCursor(0,20);
     display.print("led:");
     display.display();
-    delay(500);
+    delay(400);
   }
   if(counter==2)
   {
@@ -145,7 +150,7 @@ void loop() {
     display.setCursor(0,20);
     display.print("led:");
     display.display();
-    delay(500);
+    delay(400);
   }
   if(counter==3)   
   {
@@ -156,9 +161,7 @@ void loop() {
     display.setCursor(0,20);
     display.print("led: You are here");
     display.display();
-    delay(500);
+    delay(400);
   }
-
-  digitalWrite(led, LOW);
   display.clearDisplay();
 }
